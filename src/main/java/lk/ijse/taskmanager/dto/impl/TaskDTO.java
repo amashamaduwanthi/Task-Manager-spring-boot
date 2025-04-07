@@ -12,5 +12,5 @@ public class TaskDTO implements TaskStatus {
     private String id;
     private String title;
     private String description;
-    private Boolean completed;
+    private String completed;
 }

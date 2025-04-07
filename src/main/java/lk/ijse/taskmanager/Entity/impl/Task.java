@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "task")
 public class Task implements SuperEntity {
     @Id
-    private Long id;
+    private String id;
     private String title;
     private String description;
-    private boolean completed;
+    private String completed;
 
 
 }

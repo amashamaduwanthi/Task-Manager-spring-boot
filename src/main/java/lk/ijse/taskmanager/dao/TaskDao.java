@@ -1,4 +1,7 @@
 package lk.ijse.taskmanager.dao;
 
-public class TaskDao {
+import lk.ijse.taskmanager.Entity.impl.Task;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TaskDao extends JpaRepository<Task,String> {
 }
