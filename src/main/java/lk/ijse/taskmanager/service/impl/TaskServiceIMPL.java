@@ -7,6 +7,7 @@ import lk.ijse.taskmanager.dao.TaskDao;
 import lk.ijse.taskmanager.dto.TaskStatus;
 import lk.ijse.taskmanager.dto.impl.TaskDTO;
 import lk.ijse.taskmanager.exception.DataPersistException;
+import lk.ijse.taskmanager.exception.SelectedErrorStatus;
 import lk.ijse.taskmanager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,7 +30,7 @@ public class TaskServiceIMPL implements TaskService {
     public void saveTask(TaskDTO taskDTO) {
         Task saveTask = taskDao.save(mapping.toTask(taskDTO));
         if (saveTask == null) {
-            throw new DataPersistException("Equipment not saved");
+            throw new DataPersistException("Task not saved");
         }
 
 
@@ -42,7 +43,12 @@ public class TaskServiceIMPL implements TaskService {
 
     @Override
     public TaskStatus getTask(String id) {
-        return null;
+        if(taskDao.existsById(id)) {
+            var selectedTask = taskDao.getReferenceById(id);
+            return mapping.toTaskDTO(selectedTask);
+        }else{
+            return new SelectedErrorStatus(2,"Selected Task not found");
+        }
     }
 
     @Override

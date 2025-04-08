@@ -1,5 +1,6 @@
 package lk.ijse.taskmanager.controller;
 
+import lk.ijse.taskmanager.dto.TaskStatus;
 import lk.ijse.taskmanager.dto.impl.TaskDTO;
 import lk.ijse.taskmanager.exception.DataPersistException;
 import lk.ijse.taskmanager.service.TaskService;
@@ -32,5 +33,10 @@ public class TaskController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TaskDTO> getAllTasks() {
         return taskService.getAllTasks();
+    }
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public TaskStatus getSelectedTask(@PathVariable ("id") String id) {
+        return taskService.getTask(id
+        );
     }
 }
