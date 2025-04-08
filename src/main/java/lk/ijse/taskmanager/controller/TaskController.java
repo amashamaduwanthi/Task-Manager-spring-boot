@@ -3,6 +3,7 @@ package lk.ijse.taskmanager.controller;
 import lk.ijse.taskmanager.dto.TaskStatus;
 import lk.ijse.taskmanager.dto.impl.TaskDTO;
 import lk.ijse.taskmanager.exception.DataPersistException;
+import lk.ijse.taskmanager.exception.TaskNotFoundException;
 import lk.ijse.taskmanager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,5 +39,21 @@ public class TaskController {
     public TaskStatus getSelectedTask(@PathVariable ("id") String id) {
         return taskService.getTask(id
         );
+    }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable("id") String id) {
+        try {
+            taskService.deleteTask(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (TaskNotFoundException
+                e){
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

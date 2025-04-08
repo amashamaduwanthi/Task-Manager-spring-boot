@@ -8,10 +8,13 @@ import lk.ijse.taskmanager.dto.TaskStatus;
 import lk.ijse.taskmanager.dto.impl.TaskDTO;
 import lk.ijse.taskmanager.exception.DataPersistException;
 import lk.ijse.taskmanager.exception.SelectedErrorStatus;
+import lk.ijse.taskmanager.exception.TaskNotFoundException;
 import lk.ijse.taskmanager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
+
 import lk.ijse.taskmanager.Util.Mapping;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +56,12 @@ public class TaskServiceIMPL implements TaskService {
 
     @Override
     public void deleteTask(String id) {
-
+        Optional<Task> foundTask = taskDao.findById(id);
+        if(!foundTask.isPresent()) {
+            throw new TaskNotFoundException("Task not found");
+        }else{
+            taskDao.deleteById(id);
+        }
     }
 
     @Override
