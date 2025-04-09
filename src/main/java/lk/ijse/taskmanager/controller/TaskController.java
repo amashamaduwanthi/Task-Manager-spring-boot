@@ -18,6 +18,8 @@ import java.util.List;
 public class TaskController {
      @Autowired
      TaskService taskService;
+
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveTask(@RequestBody TaskDTO taskDTO) {
         try {
@@ -56,4 +58,24 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> updateTask(@PathVariable("id") String id,
+                                                @RequestBody TaskDTO taskDTO) {
+
+        try {
+
+            taskService.updateTask(id, taskDTO);
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (TaskNotFoundException e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

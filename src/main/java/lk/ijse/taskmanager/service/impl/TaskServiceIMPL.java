@@ -66,6 +66,14 @@ public class TaskServiceIMPL implements TaskService {
 
     @Override
     public void updateTask(String id, TaskDTO taskDTO) {
+        Optional<Task> tmpTask = taskDao.findById(id);
+        if(!tmpTask.isPresent()) {
+            throw new TaskNotFoundException("Task not found");
+        }else{
+            tmpTask.get().setTitle(taskDTO.getTitle());
+            tmpTask.get().setDescription(taskDTO.getDescription());
+            tmpTask.get().setCompleted(taskDTO.getCompleted());
 
+        }
     }
 }
