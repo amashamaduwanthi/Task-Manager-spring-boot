@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/task")
+@CrossOrigin(origins = "http://localhost:4200")
 public class TaskController {
      @Autowired
      TaskService taskService;
@@ -22,6 +23,7 @@ public class TaskController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveTask(@RequestBody TaskDTO taskDTO) {
+        System.out.println(taskDTO);
         try {
             taskService.saveTask(taskDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);

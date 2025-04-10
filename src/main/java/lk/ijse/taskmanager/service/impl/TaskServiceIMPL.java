@@ -73,6 +73,7 @@ public class TaskServiceIMPL implements TaskService {
             tmpTask.get().setTitle(taskDTO.getTitle());
             tmpTask.get().setDescription(taskDTO.getDescription());
             tmpTask.get().setCompleted(taskDTO.getCompleted());
+            tmpTask.get().setCreatedAt(taskDTO.getCreatedAt());
 
         }
     }
